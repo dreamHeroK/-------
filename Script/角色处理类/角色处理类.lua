@@ -1821,6 +1821,39 @@ function 角色处理类:助战修炼快捷学习(连接id,id,是否主角)
         end
     end
 end
+function 角色处理类:助战修炼一键学习(连接id,id)
+    local 消耗储备 = 120000
+    local 助战名称="#W助战：#G"..self.名称.."#W"
+    local 总消耗,总等级 = 0,0
+    local 项目=self.修炼.当前
+    while self.储备>=消耗储备 and self.修炼[项目][1]<self.修炼[项目][3] do
+        self.储备=self.储备-消耗储备
+        总消耗=总消耗+消耗储备
+        self.修炼[项目][2]=self.修炼[项目][2]+10
+        if self.修炼[项目][2]>=计算修炼等级经验(self.修炼[项目][1],self.修炼[项目][3]) then
+            self.修炼[项目][2]=self.修炼[项目][2]-计算修炼等级经验(self.修炼[项目][1],self.修炼[项目][3])
+            self.修炼[项目][1]=self.修炼[项目][1]+1
+            总等级=总等级+1
+        end
+    end
+    local bb项目=self.bb修炼.当前
+    while self.储备>=消耗储备 and self.bb修炼[bb项目][1]<self.bb修炼[bb项目][3] do
+        self.储备=self.储备-消耗储备
+        总消耗=总消耗+消耗储备
+        self.bb修炼[bb项目][2]=self.bb修炼[bb项目][2]+10
+        if self.bb修炼[bb项目][2]>=计算修炼等级经验(self.bb修炼[bb项目][1],self.bb修炼[bb项目][3]) then
+            self.bb修炼[bb项目][2]=self.bb修炼[bb项目][2]-计算修炼等级经验(self.bb修炼[bb项目][1],self.bb修炼[bb项目][3])
+            self.bb修炼[bb项目][1]=self.bb修炼[bb项目][1]+1
+            总等级=总等级+1
+        end
+    end
+    if 总消耗==0 then
+        常规提示(id,助战名称.."储备不足或修炼已达上限，无法一键学习")
+        return
+    end
+    self:日志记录(助战名称.."一键学习消耗"..总消耗.."点储备")
+    常规提示(id, format(助战名称.."一键学习完成，消耗储备%s，修炼提升%s级", 总消耗, 总等级))
+end
 function 角色处理类:助战学习门派技能(连接id, id, 编号,主人id,十次)
     local cis=1
     if 十次 then
