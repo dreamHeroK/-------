@@ -330,6 +330,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==1 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170120,玩家数据[id].地图单位.标识)
 		end
@@ -337,6 +338,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==2 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170121,玩家数据[id].地图单位.标识)
 		end
@@ -344,6 +346,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==3 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170122,玩家数据[id].地图单位.标识)
 		end
@@ -351,6 +354,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==4 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170123,玩家数据[id].地图单位.标识)
 		end
@@ -358,6 +362,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==5 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170124,玩家数据[id].地图单位.标识)
 		end
@@ -365,6 +370,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==6 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170125,玩家数据[id].地图单位.标识)
 		end
@@ -372,6 +378,7 @@ function 副本_鸿蒙石之鉴:对话事件处理(id,名称,事件,类型)
 		if 副本数据.鸿蒙石之鉴.进行[副本id].进程==7 then
 			if 任务数据[玩家数据[id].地图单位.标识].zhandou~=nil then 常规提示(id,"#Y/对方正在战斗中") return  end
 			if 取队伍人数(id)<1  and 调试模式==false then 常规提示(id,"#Y队伍人数低于3人，无法进入战斗") return  end
+			if 玩家数据[id].zhandou~=0 then 常规提示(id,"#Y/你当前战斗状态异常，请稍后再试") return  end
 			任务数据[玩家数据[id].地图单位.标识].zhandou=true
 			战斗准备类:创建战斗(id+0,170126,玩家数据[id].地图单位.标识)
 		end
