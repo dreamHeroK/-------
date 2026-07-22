@@ -1,0 +1,1 @@
+do local ret={VIP1 = false, VIP2 = false, VIP3 = false, VIP4 = false, VIP5 = false, VIP6 = false, VIP7 = false, VIP8 = false, VIP9 = false, VIP10 = false} return ret end

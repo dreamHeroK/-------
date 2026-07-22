@@ -1,0 +1,1 @@
+do local ret={时=0,秒=0,分=0,日期="全天"} return ret end

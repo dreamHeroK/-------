@@ -1,0 +1,28 @@
+{
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				"登陆端.sublime-project"
+			],
+			"folder_exclude_patterns":
+			[
+				"compile"
+			],
+			"path": "."
+		},
+		{
+			"path": "D:\\王亮\\gge-笨狐整理版本\\Projects\\脚本"
+		},
+		{
+			"path": "D:\\王亮\\gge-笨狐整理版本\\Extend"
+		},
+		{
+			"path": "D:\\王亮\\gge-笨狐整理版本\\Core"
+		},
+		{
+			"path": "D:\\gge\\GGELUA v0.96 的2版本\\Core"
+		}
+	]
+}

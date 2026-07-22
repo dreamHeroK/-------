@@ -1,0 +1,1 @@
+do local ret={开启=true,气血={上限=50000000,当前=50000000}} return ret end

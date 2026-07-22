@@ -1,0 +1,1 @@
+do local ret={时=20,秒=0,结束=1800,分=47,日期="周五"} return ret end
