@@ -1,0 +1,11 @@
+# 本仓库只跟踪服务端源码本身，同目录下的运行时部署文件（exe/dll/data/sql/日志等）不纳入版本控制
+/*
+!/Script/
+!/怪物参数/
+!/*.md
+!/.gitignore
+
+# OS / Editor
+.vscode/
+.idea/
+*.sublime-workspace
