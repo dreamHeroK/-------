@@ -834,7 +834,7 @@ function 辅助内挂类:活动可进行(数字id,hdmc,难度参数)
                     if 门派闯关.数据[cyid] then
                         if  门派闯关.数据[cyid].取消~=nil and 门派闯关.数据[cyid].取消 > os.time() then
                             return 玩家数据[cyid].角色.名称.."在五分钟内取消过任务，需等待五分钟后才可以继续任务哦。"
-                        elseif 门派闯关.活动时间.日期=="全天" and  门派闯关.数据[cyid].次数>=2 then
+                        elseif 门派闯关.数据[cyid].次数>=2 then
                             return 玩家数据[cyid].角色.名称.."今日已经完成了两轮，无法再继续领取今日门派闯关任务了！"
                         end
                     end

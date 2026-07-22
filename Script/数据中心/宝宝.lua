@@ -168,33 +168,42 @@ function 取宝宝装备()
 	end
 end
 
-function 宝宝特性属性(等级,特性)
+function 宝宝特性属性(等级,特性,最优)
 	local aa
 	local bb
 	if 特性=="力破" then
 		aa={-20,0,20,40,60}
+		if 最优 then return aa[#aa]+等级, 4 end
 		return  aa[取随机数(1,5)]+等级 , 取随机数(4,8) --a="#Y/忽略人物角色#G/"..xa[1].."#Y/防御力".."减少对召唤兽的伤害结果#R"..xa[2].."#Y。对NPC无效果"
 	elseif 特性=="巧劲" then
 		aa={5,10,15,20,25}
+		if 最优 then return aa[#aa], 10 end
 		return  aa[取随机数(1,5)] , 取随机数(10,20) --a="#Y/普通攻击增加伤害结果"..xa[1].."受到的所有伤害增加"..xa[2]
 	elseif 特性=="识药" then
 		aa={10,14,15,20,20}
+		if 最优 then return aa[#aa], 10 end
 		return  aa[取随机数(1,5)] , 取随机数(10,20) --a="#Y/药物效果提高"..xa[1].."受到的所有伤害增加"..xa[2]
 	elseif 特性=="抗物" then
+		if 最优 then return 30, 10 end
 		return  取随机数(5,30) , 取随机数(10,22) --a="#Y/在场时，我方所有单位物理防御增加"..xa[1].."，自身受到法术伤害增加"..xa[2]
 	elseif 特性=="抗法" then
+		if 最优 then return 30, 10 end
 		return  取随机数(5,30) , 取随机数(10,22) --a="#Y/在场时，我方所有单位法术防御增加"..xa[1].."，自身受到物理伤害增加"..xa[2]
 	elseif 特性=="复仇" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 5 end
 		return  aa[取随机数(1,5)], 取随机数(5,10) --a="#Y/主人被击倒时，有"..xa[1].."概率向敌方单位发动一次攻击，最多生效3次。减少所有防御力"..xa[2]
 	elseif 特性=="自恋" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 4 end
 		return  aa[取随机数(1,5)], 取随机数(4,8)
 	elseif 特性=="灵刃" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 5 end
 		return  aa[取随机数(1,5)], 取随机数(5,10)
 	elseif 特性=="灵法" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 5 end
 		return  aa[取随机数(1,5)], 取随机数(5,10)
 	elseif 特性=="预知" then
 		aa={10,16,21,26,32}
@@ -204,46 +213,60 @@ function 宝宝特性属性(等级,特性)
 		return  aa[取随机数(1,5)], 取随机数(4,8)
 	elseif 特性=="瞬击" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 5 end
 		return  aa[取随机数(1,5)], 取随机数(5,10)
 	elseif 特性=="瞬法" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 5 end
 		return  aa[取随机数(1,5)], 取随机数(5,10)
 	elseif 特性=="阳护" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 15 end
 		return  aa[取随机数(1,5)], 取随机数(15,30)
 	elseif 特性=="识物" then
 		aa={5,8,10,13,16}
+		if 最优 then return aa[#aa], 4 end
 		return  aa[取随机数(1,5)], 取随机数(4,8) --a="#Y/召唤兽套装附带的技能为法术技能时，触发概率提高"..xa[1].."全属性降低"..xa[2]
 	elseif 特性=="护佑" then
+		if 最优 then return 50, 5 end
 		return  取随机数(20,50), 取随机数(5,10) --a="#Y/第2回合进场，我方百分比最低的单位受到的伤害降低"..xa[1].."持续2回合，法术伤害力降低#R/"..xa[2]
 	elseif 特性=="洞察" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 4 end
 		return  aa[取随机数(1,5)], 取随机数(4,8) --a="#Y/PVP战斗中行动时有"..xa[1].."概率发现什么，全属性降低"..xa[2]
 	elseif 特性=="弑神" then
 		aa={60,90,120,150,180}
 		bb={20,30,40}
+		if 最优 then return aa[#aa], bb[1] end
 		return  aa[取随机数(1,5)], bb[取随机数(1,3)] --a="#Y/对已经神佑过的召唤兽法术伤害增加"..xa[1].."，普通攻击命中率下降"..xa[2]
 	elseif 特性=="御风" then
 		aa={7,10,14,17,21,30}
+		if 最优 then return aa[#aa], 10 end
 		return  aa[取随机数(1,6)], 取随机数(10,20)
 	elseif 特性=="顺势" then
 		aa={60,90,120,150,180}
 		bb={90,90,90,120,150,180}
+		if 最优 then return aa[#aa], bb[1] end
 		return  aa[取随机数(1,5)], bb[取随机数(1,6)]
 	elseif 特性=="怒吼" then
 		aa={30,50,60,70,90}
+		if 最优 then return aa[#aa]+等级, 5 end
 		return  aa[取随机数(1,5)]+等级, 取随机数(5,10) --"#Y/第二回合以后进场时，我方伤害最高的单位提高"..xa[1].."伤害力，持续2回合，法术伤害力降低"..xa[2]
 	elseif 特性=="逆境" then
 		aa={33,50,60,80,100}
 		bb={15,15,20,30}
+		if 最优 then return aa[#aa], bb[1] end
 		return  aa[取随机数(1,5)], bb[取随机数(1,4)]
 	elseif 特性=="吮魔" then
+		if 最优 then return 5, 15 end
 		return  取随机数(1,5), 取随机数(15,25) --(普通物理攻击时，吸取对方损失气血的魔法；对当前魔法超过50%的单位伤害结果减少)
 	elseif 特性=="争锋" then
 		aa={6,10,13,16,20}
+		if 最优 then return aa[#aa], 40 end
 		return  aa[取随机数(1,5)], 取随机数(40,110) --a="#Y/对召唤兽物理伤害结果增加"..xa[1].."对人物伤害结果减少"..xa[2]
 	elseif 特性=="灵断" then
 		aa={33,50,60,80,100}
+		if 最优 then return aa[#aa], 5 end
 		return  aa[取随机数(1,5)], 取随机数(5,10)
 	elseif 特性=="乖巧" then
 		aa={20,30,40,50,50}

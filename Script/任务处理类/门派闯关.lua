@@ -57,7 +57,7 @@ function 门派闯关:开启活动()
 	if self.活动时间.日期=="全天" then
 		删除=false
 	else
-		self.开启Time=os.time()+5400
+		self.开启Time=os.time()+7200
 	end
 	for n=1,15 do
 		local 任务id=取唯一任务(106)

@@ -1,1 +1,1 @@
-do local ret={[90180]={当前=68},[178]={[1]=true,[2]=true,当前=120,[3]=true},[176]={[1]=true,[2]=true,当前=77},[175]={当前=0}} return ret end
+do local ret={[90180]={当前=136},[175]={当前=0}} return ret end
