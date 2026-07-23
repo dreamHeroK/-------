@@ -9,8 +9,18 @@
 		Q_门派闯关={}
 		Q_文韵墨香={}
 		Q_天降辰星={}
-function 整秒处理(时间)
-	if 服务端参数.秒=="00" and 服务端参数.小时=="00" and 服务端参数.分钟=="00"then
+每日重置日期文件 = [[sql/每日重置日期.txt]]
+function 保存每日重置日期()
+	写出文件(每日重置日期文件, tostring(tonumber(os.date("%Y%m%d"))))
+end
+function 需要补做每日重置()
+	if f函数.文件是否存在(每日重置日期文件) == false then
+		return true
+	end
+	local 上次日期 = tonumber(读入文件(每日重置日期文件))
+	return 上次日期 ~= tonumber(os.date("%Y%m%d"))
+end
+function 每日零点重置()
 		for n,v in pairs(玩家数据) do
 	    		if 玩家数据[n].角色.决战积分~=nil then
 				玩家数据[n].角色.决战积分=0
@@ -132,6 +142,13 @@ function 整秒处理(时间)
 		elseif tonumber(os.date("%d")) == 1 then-----------每月
 			print(每个月新的开始)
 		end
+	设置任务138()
+	保存每日重置日期()
+end
+
+function 整秒处理(时间)
+	if 服务端参数.秒=="00" and 服务端参数.小时=="00" and 服务端参数.分钟=="00"then
+		每日零点重置()
 	end
 
 	if 服务器关闭 ~= nil and 服务器关闭.开关 then
@@ -240,10 +257,6 @@ function 整秒处理(时间)
 	-- 	end
 	-- end
 
-	if 服务端参数.秒=="00" and 服务端参数.小时=="00" and 服务端参数.分钟=="00"then
-		-- 地煞星:刷新资源()
-		设置任务138()
-	end
 	if 小龟赛跑.次数3 == 3 and 小龟赛跑.开关==true then
 		local 结算目标 = nil
 		if 小龟赛跑.第一名 == 1 then
@@ -1097,6 +1110,13 @@ function 维护通知()
 end
 
 function 循环函数()
+	if 初始化完毕 and not __已补做每日重置 then
+		__已补做每日重置 = true
+		if 需要补做每日重置() then
+			print("检测到隔天重启，补做每日0点重置...")
+			每日零点重置()
+		end
+	end
 	if 服务端参数 and 服务端参数.启动时间 ~= os.time() and 初始化完毕 then
 		时辰函数()
 		服务端参数.分钟=os.date("%M", os.time())
