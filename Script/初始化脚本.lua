@@ -1649,6 +1649,9 @@ print("数据表===加载完毕！")
 		任务数据[lsrw[n].存储id]=table.loadstring(table.tostring(lsrw[n]))
 	end
 	lsrw=nil
+	for n, v in pairs(任务数据) do --启动时清空遗留的战斗中标记，避免异常终止的战斗永久卡住任务怪
+		v.zhandou=nil
+	end
 	获取__梦幻指引()
       刷新自定义数据()
 	师门商店类:加载数据()

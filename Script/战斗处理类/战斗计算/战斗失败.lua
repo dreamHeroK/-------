@@ -18,6 +18,7 @@ function 战斗失败:初始化()
 end
 
 function 战斗失败:失败处理(失败id,是否逃跑,战斗数据)
+	if 战斗数据.任务id~=nil and 任务数据[战斗数据.任务id]~=nil then 任务数据[战斗数据.任务id].zhandou=nil end
 	if 是否逃跑 == 1 then
         		return
     	end

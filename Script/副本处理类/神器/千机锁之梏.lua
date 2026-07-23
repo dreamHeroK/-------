@@ -37,8 +37,7 @@ function 副本_千机锁之梏:开启副本(id,nandu)
 		return
 	end
 	local 队伍id=玩家数据[id].队伍
-	local 难度 = 玩家数据[id].角色.神器难度
-	 玩家数据[id].角色.神器难度 = 难度
+	local 难度 = nandu or 玩家数据[id].角色.神器难度 or 1
 	for n=1,#队伍数据[队伍id].成员数据 do
 		local 临时id=队伍数据[队伍id].成员数据[n]
 		if 副本数据.神器任务.完成[临时id]~=nil then
@@ -48,6 +47,7 @@ function 副本_千机锁之梏:开启副本(id,nandu)
 			常规提示(id,"#Y"..玩家数据[临时id].角色.名称.."正在进行神器任务，无法领取新的神器任务")
 			return
 		end
+		玩家数据[临时id].角色.神器难度 = 难度
 	end
 	if 副本数据.千机锁之梏.进行[id] == nil then
 	    副本数据.千机锁之梏.进行[id]={进程=1}

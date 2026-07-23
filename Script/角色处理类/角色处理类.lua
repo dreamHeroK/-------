@@ -844,7 +844,7 @@ end
 function 角色处理类:取召唤兽统御(id, 认证码)
     for n = 1, #self.坐骑列表 do
         if self.坐骑列表[n].统御召唤兽[1] == 认证码 or self.坐骑列表[n].统御召唤兽[2] == 认证码 then
-            return self.坐骑列表[n].技能, self.坐骑列表[n].成长 or 1
+            return self.坐骑列表[n].坐骑技能, self.坐骑列表[n].成长 or 1
         end
     end
     return false,1
@@ -4953,60 +4953,38 @@ function 角色处理类:刷新信息(是否, 体质, 魔力, 装备)
 
 
 
-     -- 只根据当前称谓加成属性
-             if self.当前称谓=="神威组冠军" or self.当前称谓=="精锐组冠军"  or self.当前称谓=="天科组冠军"or self.当前称谓=="天元组冠军" then
-                self.伤害=math.floor(self.伤害*1.03)
-                self.防御=math.floor(self.防御*1.03)
-                self.最大气血=math.floor(self.最大气血*1.03)
-                self.灵力=math.floor(self.灵力*1.03)
-                self.速度=math.floor(self.速度*1.03)
-             end
-            if self.当前称谓=="神威组亚军" or self.当前称谓=="精锐组亚军"  or self.当前称谓=="天科组亚军"or self.当前称谓=="天元组亚军" then
-                self.伤害=math.floor(self.伤害*1.02)
-                self.防御=math.floor(self.防御*1.02)
-                self.最大气血=math.floor(self.最大气血*1.02)
-                self.灵力=math.floor(self.灵力*1.02)
-                self.速度=math.floor(self.速度*1.02)
-             end
-            if self.当前称谓=="神威组季军" or self.当前称谓=="精锐组季军"  or self.当前称谓=="天科组季军"or self.当前称谓=="天元组季军" then
-                self.伤害=math.floor(self.伤害*1.015)
-                self.防御=math.floor(self.防御*1.015)
-                self.最大气血=math.floor(self.最大气血*1.015)
-                self.灵力=math.floor(self.灵力*1.015)
-                self.速度=math.floor(self.速度*1.015)
-             end
-             if self.当前称谓=="威震天下" or self.当前称谓=="九天揽月" then
+     -- 所有已获得的称谓属性均生效叠加，不再局限于当前显示的称谓
+     -- 百分比类加成先累加再统一乘算一次，避免多称谓叠加时变成指数级增长
+            local 称谓加成 = 0
+            for n=1,#self.称谓 do
+             local 称谓=self.称谓[n]
+            if 称谓=="神威组冠军" then 称谓加成 = 称谓加成 + 0.03 end
+            if 称谓=="精锐组冠军" then 称谓加成 = 称谓加成 + 0.03 end
+            if 称谓=="天科组冠军" then 称谓加成 = 称谓加成 + 0.03 end
+            if 称谓=="天元组冠军" then 称谓加成 = 称谓加成 + 0.03 end
+            if 称谓=="神威组亚军" then 称谓加成 = 称谓加成 + 0.02 end
+            if 称谓=="精锐组亚军" then 称谓加成 = 称谓加成 + 0.02 end
+            if 称谓=="天科组亚军" then 称谓加成 = 称谓加成 + 0.02 end
+            if 称谓=="天元组亚军" then 称谓加成 = 称谓加成 + 0.02 end
+            if 称谓=="神威组季军" then 称谓加成 = 称谓加成 + 0.015 end
+            if 称谓=="精锐组季军" then 称谓加成 = 称谓加成 + 0.015 end
+            if 称谓=="天科组季军" then 称谓加成 = 称谓加成 + 0.015 end
+            if 称谓=="天元组季军" then 称谓加成 = 称谓加成 + 0.015 end
+            if 称谓=="威震天下" then
                 self.伤害=math.floor(self.伤害+200)
                 self.灵力=math.floor(self.灵力+100)
             end
-            if self.当前称谓=="神豪"  then
-                 self.伤害=math.floor(self.伤害*1.08)
-                self.防御=math.floor(self.防御*1.08)
-                self.最大气血=math.floor(self.最大气血*1.08)
-                self.灵力=math.floor(self.灵力*1.08)
-                self.速度=math.floor(self.速度*1.08)
+            if 称谓=="九天揽月" then
+                self.伤害=math.floor(self.伤害+200)
+                self.灵力=math.floor(self.灵力+100)
             end
-
-             if self.当前称谓=="傲视群雄唯我独尊"  then
-                 self.伤害=math.floor(self.伤害*1.08)
-                self.防御=math.floor(self.防御*1.08)
-                self.最大气血=math.floor(self.最大气血*1.08)
-                self.灵力=math.floor(self.灵力*1.08)
-                self.速度=math.floor(self.速度*1.08)
+            if 称谓=="神豪" then
+                称谓加成 = 称谓加成 + 0.08
             end
-            --  if 称谓=="神豪" or 称谓=="傲视群雄唯我独尊" then
-            --     self.伤害=math.floor(self.伤害+100)
-            --     self.灵力=math.floor(self.灵力+50)
-            --     self.最大气血=math.floor(self.最大气血+500)
-            --     self.防御=math.floor(self.防御+100)
-            --     self.速度=math.floor(self.速度+50)
-            -- end
-
-            for n=1,#self.称谓 do
-             local 称谓=self.称谓[n]
-
+             if 称谓=="傲视群雄唯我独尊" then
+                称谓加成 = 称谓加成 + 0.08
+            end
             if 称谓=="独步西游若等闲" then
-            --if self.当前称谓=="独步西游若等闲"  then
                 self.伤害=math.floor(self.伤害+100)
                 self.灵力=math.floor(self.灵力+50)
                 self.最大气血=math.floor(self.最大气血+500)
@@ -5014,7 +4992,6 @@ function 角色处理类:刷新信息(是否, 体质, 魔力, 装备)
                 self.速度=math.floor(self.速度+50)
             end
             if 称谓=="一举成名天下惊" then
-            --if self.当前称谓=="一举成名天下惊"  then
                 self.伤害=math.floor(self.伤害+100)
                 self.灵力=math.floor(self.灵力+50)
                 self.最大气血=math.floor(self.最大气血+500)
@@ -5022,7 +4999,6 @@ function 角色处理类:刷新信息(是否, 体质, 魔力, 装备)
                 self.速度=math.floor(self.速度+50)
             end
             if 称谓=="苍茫三界主沉浮" then
-            --if self.当前称谓=="苍茫三界主沉浮"  then
                 self.伤害=math.floor(self.伤害+100)
                 self.灵力=math.floor(self.灵力+50)
                 self.最大气血=math.floor(self.最大气血+500)
@@ -5030,6 +5006,13 @@ function 角色处理类:刷新信息(是否, 体质, 魔力, 装备)
                 self.速度=math.floor(self.速度+50)
             end
         end
+            if 称谓加成 > 0 then
+                self.伤害=math.floor(self.伤害*(1+称谓加成))
+                self.防御=math.floor(self.防御*(1+称谓加成))
+                self.最大气血=math.floor(self.最大气血*(1+称谓加成))
+                self.灵力=math.floor(self.灵力*(1+称谓加成))
+                self.速度=math.floor(self.速度*(1+称谓加成))
+            end
 
     for k,v in pairs(self.本命属性) do
         if self[k] then
