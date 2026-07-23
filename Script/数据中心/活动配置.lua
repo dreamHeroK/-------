@@ -96,7 +96,8 @@ __Funfa["九转金丹"]=function(name,hd)
 	return name,取随机数(HDPZ[hd]["金丹"][1],HDPZ[hd]["金丹"][2])
 end
 __Funfa["怪物卡片"]=function(name,hd)
-	return name,取随机数(HDPZ[hd]["怪物卡片"][1],HDPZ[hd]["怪物卡片"][2])
+	-- 统一限制活动掉落变身卡等级：仅7-9级
+	return name,取随机数(7,9)
 end
 
 __Funfa["装备书铁"]=function(name,hd)

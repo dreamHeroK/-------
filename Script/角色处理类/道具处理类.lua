@@ -9083,6 +9083,25 @@ end
 
 function 道具处理类:给予道具(id,名称,数量,参数,附加,专用,数据,消费,消费方式,消费内容,超链接,限时,附加2,参数2)
     if id ==nil then return end
+    if 名称 == "怪物卡片" then
+        local 非掉落来源 = 附加 == "商店" or 附加 == "商城购买" or 附加 == "翻一翻" or 附加 == "bwjf" or 附加 == "嘉年华转盘抽奖" or 附加 == "活跃度奖励" or 附加 == "赞助" or 附加 == "GM工具发送" or 附加2 == "GM工具发送"
+        if not 非掉落来源 then
+            local 卡片等级 = nil
+            if type(数量) == "number" then
+                卡片等级 = 数量
+            elseif type(数量) == "string" and 变身卡数据 and 变身卡数据[数量] then
+                卡片等级 = 变身卡数据[数量].等级
+            end
+            if 卡片等级 and 卡片等级 < 7 then
+                local 折算银子 = 卡片等级 * 100000
+                玩家数据[id].角色:添加银子(折算银子,"低阶变身卡折算",1)
+                常规提示(id,"#Y/低阶变身卡已自动折算为#R"..折算银子.."#Y/两银子")
+                return true
+            elseif 卡片等级 and 卡片等级 > 9 then
+                数量 = 取随机数(7,9)
+            end
+        end
+    end
     if 名称=="上古玉魄·阴" or 名称=="上古玉魄·阳" or (type(数据)=="table" and (数据.名称=="上古玉魄·阴" or 数据.名称=="上古玉魄·阳")) then
         local x名称
         if 名称 and string.find(名称,"上古玉魄") then
