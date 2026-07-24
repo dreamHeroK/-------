@@ -17,6 +17,7 @@ function 设置任务502(id)
 		id=任务id,
 		起始=os.time(),
 		结束=结束时间,
+		是存档=true,
 		玩家id=id,
 		队伍组={},
 		名称=1,
