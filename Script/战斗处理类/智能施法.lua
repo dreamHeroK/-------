@@ -86,34 +86,99 @@ local function 取技能等级(目标,名称)
   return 0
 end
 
-智能门派施法["化生寺"] = function (self,n)
-	local 目标 = 取死亡目标(self,n)  --先找死亡队员
-	local 通过 = false
-	if 目标 and 取技能等级(self.参战单位[n],"我佛慈悲") ~= 0 then
-		self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="我佛慈悲",附加=""}
-		通过 = true
+local function 推气过宫可上buff(self,编号)  --经脉/法宝使推气过宫附带上buff效果
+	local 单位 = self.参战单位[编号]
+	if self:取经脉(编号,"化生寺","佛佑") then return true end  --附带金刚护体
+	if not self.PK战斗 and 单位.本命法宝 and 单位.本命法宝.名称=="弥音禅钟" and 单位.本命法宝.开启 and (单位.本命法宝.耐久 or 0)>0 then
+		return true  --几率附带金刚护法
 	end
-	if not 通过 then
-		local 目标 = self:取气血百分比最低(n,2)  --再找气血比例最低
-		if 目标 and 目标 ~= 0 and self.参战单位[目标].气血<self.参战单位[目标].最大气血 * 0.8 and 取技能等级(self.参战单位[n],"推气过宫") ~= 0  then
+	return false
+end
+
+local function 取封印队友(self,编号)  --找一个被封印(异常状态)的队友
+	local 目标组={}
+	for n=1,#self.参战单位 do
+		if n ~= 编号 and self.参战单位[n].队伍==self.参战单位[编号].队伍 and self.参战单位[n].气血>0 and 初始技能计算:取是否被封印(self,n) then
+			目标组[#目标组+1]=n
+		end
+	end
+	if #目标组==0 then return end
+	return 目标组[取随机数(1,#目标组)]
+end
+
+智能门派施法["化生寺"] = function (self,n)
+	local 自身 = self.参战单位[n]
+	local 通过 = false
+
+	local 死亡单位数,低血量单位数,被封印单位数 = 0,0,0
+	for i=1,#self.参战单位 do
+		if i ~= n and self.参战单位[i].队伍==自身.队伍 and self.参战单位[i].类型=="角色" then
+			if self.参战单位[i].气血<=0 then
+				死亡单位数 = 死亡单位数+1
+			elseif self.参战单位[i].气血 < self.参战单位[i].最大气血 * 0.3 then
+				低血量单位数 = 低血量单位数+1
+			end
+			if 初始技能计算:取是否被封印(self,i) then
+				被封印单位数 = 被封印单位数+1
+			end
+		end
+	end
+
+	--队友大面积被封印且愤怒足够时，优先解封+治疗
+	if 自身.愤怒 and 自身.愤怒 >= 120 and 被封印单位数 >= 3 and 取技能等级(自身,"晶清诀") ~= 0 then
+		local 目标 = 取封印队友(self,n)
+		if 目标 then
+			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="晶清诀",附加=""}
+			通过 = true
+		end
+	end
+
+	--复活：死亡人数较少时优先，团灭时优先保住剩余队员而非单体复活
+	if not 通过 and 死亡单位数 >= 1 and 死亡单位数 <= 2 and 取技能等级(自身,"我佛慈悲") ~= 0 then
+		local 目标 = 取死亡目标(self,n)
+		if 目标 then
+			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="我佛慈悲",附加=""}
+			通过 = true
+		end
+	end
+
+	--治疗：多人残血用群体阈值，单人残血用更低阈值避免空放
+	if not 通过 and 取技能等级(自身,"推气过宫") ~= 0 then
+		local 目标 = self:取气血百分比最低(n,2)
+		if 目标 and 目标 ~= 0 then
+			if 低血量单位数 >= 3 then
+				self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="推气过宫",附加=""}
+				通过 = true
+			elseif 低血量单位数 >= 1 and self.参战单位[目标].气血 < self.参战单位[目标].最大气血 * 0.5 then
+				self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="推气过宫",附加=""}
+				通过 = true
+			end
+		end
+	end
+
+	--推气过宫能附带上buff时优先用它，一举两得（治疗+上buff）
+	if not 通过 and 取技能等级(自身,"推气过宫") ~= 0 and 推气过宫可上buff(self,n) then
+		local 目标 = self:取单个友方目标1(n)
+		if 目标 and 目标 ~= 0 and not (self.参战单位[目标].法术状态 and (self.参战单位[目标].法术状态.金刚护体 or self.参战单位[目标].法术状态.金刚护法)) then
 			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="推气过宫",附加=""}
 			通过 = true
 		end
 	end
+
 	if not 通过 then
-		if 取技能等级(self.参战单位[n],"金刚护法") ~= 0  then
+		if 取技能等级(自身,"金刚护法") ~= 0  then
 			local 目标 = self:取单个友方目标1(n)  --随机释放状态技能
 			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="金刚护法",附加=""}
 			通过 = true
-		elseif 取技能等级(self.参战单位[n],"金刚护体") ~= 0  then
+		elseif 取技能等级(自身,"金刚护体") ~= 0  then
 			local 目标 = self:取单个友方目标1(n)  --随机释放状态技能
 			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="金刚护体",附加=""}
 			通过 = true
-		elseif 取技能等级(self.参战单位[n],"韦陀护法") ~= 0  then
+		elseif 取技能等级(自身,"韦陀护法") ~= 0  then
 			local 目标 = self:取单个友方目标1(n)  --随机释放状态技能
 			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="韦陀护法",附加=""}
 			通过 = true
-		elseif 取技能等级(self.参战单位[n],"一苇渡江") ~= 0  then
+		elseif 取技能等级(自身,"一苇渡江") ~= 0  then
 			local 目标 = self:取单个友方目标1(n)  --随机释放状态技能
 			self.参战单位[n].指令={下达=false,类型="法术",目标=目标,敌我=0,参数="一苇渡江",附加=""}
 			通过 = true
